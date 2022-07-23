@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dibujando con flechas</title>
+  </head>
+  <body>
+    <canvas width="500" height="500" id="area_de_dibujo"></canvas>
+    <p>Mueve las flechas del teclado para dibujar</p>
+<script src="eventos.js"></script>
+  </body>
+</html>
+
+
+
+
+PARA LA FUNCION DE ALEATORIO {
+
+
+function aleatorio(min, maxi)
+{
+  var resultado;
+  resultado = Math.floor(Math.random() * (maxi - min + 1)) + min;
+  return resultado
+}
+
+}
+
+
+
+
+
+
+AÚN NO TERMINADO{
+
+var vp = document.getElementById("villa");
+var papel = vp.getContext("2d");
+
+var fondo = {
+  url: "tile.png",
+  cargaOK: false
+}
+
+var pollo = {
+  url: "pollo.png",
+  cargaOK: false
+}
+
+function dibujar()
+{
+  if(fondo.cargaOK)
+    {
+      papel.drawImage(fondo.objeto, 0, 0);
+    }
+    if(pollo.cargaOK)
+      {
+        var x = 110;
+        var y = 110;
+        papel.drawImage(pollo.objeto, x, y);
+      }
+}
+
+function cargarFondo(){
+  fondo.cargaOK = true;
+  dibujar();
+}
+
+function cargarPollos(){
+  pollo.cargaOK = true;
+  dibujar();
+}
+
+pollo.objeto = new Image();
+pollo.objeto.src = pollo.url;
+pollo.objeto.addEventListener("load", cargarPollos);
+
+fondo.objeto = new Image();
+fondo.objeto.src = fondo.url;
+fondo.objeto.addEventListener("load", cargarFondo);
+
+function dibujarPollo(){
+  papel.drawImage(pollo, 10, 10);
+}
+
+
+
+
+
+var teclas = {
+  UP: 38,
+  DOWN: 40,
+  LEFT: 37,
+  RIGTH: 39
+};
+
+console.log(teclas);
+
+document.addEventListener("keydown", moverGallina);
+var x = 150;
+var y = 150;
+
+moverGallina("pollo", 110, 110, 110, 110, papel);
+
+function moverPollo(pollo, xinicial, yinicial, xfinal, yfinal, lienzo)
+{
+  vp.beginPath();
+  vp.moveTo(xinicial, yinicial);
+  vp.lineTo(xfinal, yfinal);
+  vp.stroke();
+  vp.closePath();
+}
+
+function moverGallina(evento)
+{
+
+  var movimiento = 10;
+switch(evento.keyCode)
+{
+  case teclas.UP:
+  moverGallina(pollo, x, y, x, y - movimiento, papel);
+  y = y - movimiento;
+  break;
+  case teclas.DOWN:
+  moverGallina(pollo, x, y, x, y + movimiento, papel);
+  y = y + movimiento;
+  break;
+  case teclas.LEFT:
+  moverGallina(pollo, x, y, x - movimiento, y, papel);
+  x = x - movimiento;
+  break;
+  case teclas.RIGTH:
+  moverGallina(pollo, x, y, x + movimiento, y, papel);
+  x = x + movimiento;
+  break;
+}
+
+}
+
+}
+
+
+
+
+UNO FUNCIONAL QUE ESTABA EN LOS COMENTARIOS{
+
+  var vp = document.getElementById("villa");
+  var papel = vp.getContext("2d");
+  var mapa = "tile.png";
+
+  var fondo = {
+  url: "tile.png",
+  cargaOK: false
+  };
+  var vaca = {
+  url: "vaca.png",
+  cargaOK: false
+  };
+  var pollo = {
+  url: "pollo.png",
+  cargaOK: false
+  };
+  var cerdo = {
+  url: "cerdo.png",
+  cargaOK: false
+  };
+
+  var cantidaddevacas = aleatorio(2, 10);
+  var cantidaddecerdos = aleatorio(2, 10);
+  var cantidaddepollos = aleatorio(2, 10);
+
+  fondo.objeto = new Image();
+  fondo.objeto.src = fondo.url;
+  fondo.objeto.addEventListener("load", cargarFondo);
+
+  pollo.objeto = new Image();
+  pollo.objeto.src = "pollo.png";
+  pollo.objeto.addEventListener("load", cargarPollos);
+
+  cerdo.objeto = new Image();
+  cerdo.objeto.src = "cerdo.png";
+  cerdo.objeto.addEventListener("load", cargarCerdos);
+
+  vaca.objeto = new Image();
+  vaca.objeto.src = "vaca.png";
+  vaca.objeto.addEventListener("load", cargarVacas);
+
+  function cargarFondo()
+  {
+  fondo.cargaOK = true;
+  dibujar();
+  }
+  function cargarVacas()
+  {
+  vaca.cargaOK = true;
+  dibujar();
+  }
+  function cargarPollos()
+  {
+  pollo.cargaOK = true;
+  dibujar();
+  }
+  function cargarCerdos()
+  {
+  cerdo.cargaOK = true;
+  dibujar();
+  }
+
+  function dibujar()
+  {
+  if(fondo.cargaOK == true)
+  {
+  papel.drawImage(fondo.objeto, 0, 0);
+  }
+  if(cerdo.cargaOK == true)
+  {
+  console.log(cantidaddecerdos);
+  for(var c=0; c < cantidaddecerdos; c++)
+  {
+  var x = aleatorio (0, 6);
+  var y = aleatorio (0, 6);
+  x = x * 60;
+  y = y * 60;
+  papel.drawImage(cerdo.objeto, x, y);
+  }
+  if(pollo.cargaOK == true)
+  {
+  console.log(cantidaddepollos);
+  for(var p=0; p < cantidaddepollos; p++)
+  {
+  var x = aleatorio (0, 6);
+  var y = aleatorio (0, 6);
+  x = x * 60;
+  y = y * 60;
+  papel.drawImage(pollo.objeto, x, y);
+  }
+  if(vaca.cargaOK == true)
+  {
+  console.log(cantidaddevacas);
+  for(var v=0; v < cantidaddevacas; v++)
+  {
+  var x = aleatorio (0, 6);
+  var y = aleatorio (0, 6);
+  x = x * 60;
+  y = y * 60;
+  papel.drawImage(vaca.objeto, x, y);
+  }
+  }
+  }
+  }
+
+  }
+
+  function aleatorio(min, maxi)
+  {
+  var resultado;
+  resultado = Math.floor(Math.random() * (maxi - min + 1)) + min;
+  return resultado;
+  }
+
+}
